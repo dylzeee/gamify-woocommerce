@@ -1,0 +1,276 @@
+.gamify-dashboard {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.gamify-points-summary {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.gamify-points-summary h2 {
+  margin: 0 0 10px;
+}
+
+.points-total strong {
+  font-size: 1.5em;
+  color: #007cba;
+}
+
+.gamify-transactions h3 {
+  margin-bottom: 15px;
+}
+
+.gamify-transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.gamify-transactions-table th,
+.gamify-transactions-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.gamify-transactions-table th {
+  background: #f1f1f1;
+}
+
+.gamify-transactions-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.gamify-rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* Responsive grid */
+  gap: 20px;
+  /* Spacing between cards */
+}
+
+.gamify-reward-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.gamify-reward-card:hover {
+  transform: scale(1.03);
+  /* Subtle hover effect */
+}
+
+.gamify-reward-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.gamify-reward-card h4 {
+  margin: 10px 0;
+  font-size: 1.25em;
+  color: #333;
+}
+
+.gamify-reward-card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.gamify-reward-card .button {
+  background: #007cba;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.gamify-reward-card .button:hover {
+  background: #005a8c;
+}
+
+/* Pagination Buttons */
+.gamify-pagination-controls {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.gamify-pagination-controls button {
+  background: #f3f3f3;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.gamify-pagination-controls button:hover {
+  background: #007cba;
+  color: #fff;
+}
+
+.gamify-pagination-controls button.active {
+  background: #005a8c;
+  color: #fff;
+  border-color: #005a8c;
+}
+
+/* My Rewards Table */
+.gamify-rewards-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.gamify-rewards-table th,
+.gamify-rewards-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.gamify-rewards-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+}
+
+.gamify-rewards-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.gamify-rewards-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.gamify-rewards-table td {
+  color: #555;
+}
+
+/* Type Column (First Column) */
+.gamify-rewards-table td:first-child {
+  font-style: italic;
+  color: #777;
+  font-weight: normal;
+}
+
+/* Coupon Code Column (Second Column) */
+.gamify-rewards-table td:nth-child(2) {
+  font-weight: bold;
+  color: #007cba;
+  text-transform: uppercase;
+  /* Optional: Style as uppercase for emphasis */
+}
+
+/* Discount Column (Third Column) */
+.gamify-rewards-table td:nth-child(3) {
+  color: #555;
+}
+
+/* Expiration Column (Fourth Column) */
+.gamify-rewards-table td:nth-child(4) {
+  color: #555;
+}
+
+/* Copy Button Styles */
+.gamify-copy-button {
+  margin-left: 10px;
+  padding: 0;
+  font-size: 14px;
+  border: none;
+  background: none;
+  /* No background color */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  /* Icon size */
+  height: 24px;
+  transition: transform 0.2s ease;
+  /* Subtle hover effect */
+}
+
+.gamify-copy-button:hover {
+  transform: scale(1.1);
+  /* Slightly enlarge on hover */
+}
+
+.gamify-copy-button:active {
+  transform: scale(0.95);
+  /* Slightly shrink on click */
+}
+
+/* Clipboard Icon */
+.gamify-copy-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.gamify-icon-clipboard {
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 fill%3D%22%23007cba%22 viewBox%3D%220 0 24 24%22%3E%3Cpath d%3D%22M19 4h-4V2H9v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM9 4h6v2H9V4zm10 16H5V6h2v2h10V6h2v14z%22/%3E%3C/svg%3E');
+}
+
+.gamify-icon-check {
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 fill%3D%22%23007cba%22 viewBox%3D%220 0 24 24%22%3E%3Cpath d%3D%22M9 16.2l-4.2-4.2L3.6 13 9 18.4 21 6.4l-1.4-1.4L9 16.2z%22/%3E%3C/svg%3E');
+}
+
+.gamify-links {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.gamify-link {
+  color: #007cba;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.gamify-link:hover {
+  color: #fff;
+  background-color: #007cba;
+}
+
+/* Pagination Buttons */
+.gamify-pagination-button {
+  background: #f3f3f3;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.gamify-pagination-button:hover {
+  background: #007cba;
+  color: #fff;
+}
+
+.gamify-pagination-button.active {
+  background: #007cba;
+  color: #fff;
+  border-color: #007cba;
+}
