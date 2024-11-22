@@ -274,3 +274,199 @@
   color: #fff;
   border-color: #007cba;
 }
+
+.gamify-rewards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.gamify-reward-card {
+  width: calc(33.333% - 20px);
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gamify-reward-image-wrapper {
+  margin-bottom: 10px;
+}
+
+.gamify-reward-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.gamify-reward-points {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.gamify-redeem-button {
+  margin-top: auto;
+  background-color: #007cba;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.gamify-redeem-button:hover {
+  background-color: #005a87;
+}
+
+.gamify-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.gamify-pagination-button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.gamify-pagination-button:hover {
+  background-color: #007cba;
+  color: #fff;
+}
+
+.gamify-reward-card button.gamify-disabled-button {
+  background-color: #ccc;
+  color: #666;
+  border: none;
+  padding: 10px 10px;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+/* Rewards Grid */
+.gamify-rewards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Reward Cards */
+.gamify-reward-card {
+  width: calc(33.333% - 20px);
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gamify-reward-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.gamify-reward-points {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+/* Active Button */
+.gamify-redeem-button {
+  background-color: #007cba;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* Disabled Button */
+.gamify-disabled-button {
+  background-color: #ccc;
+  color: #666;
+  border: none;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  border-radius: 3px;
+}
+
+/* Pagination */
+.gamify-pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.gamify-pagination-button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  color: #007cba;
+}
+
+.gamify-pagination-button.active {
+  background-color: #007cba;
+  color: #fff;
+  border-color: #007cba;
+  font-weight: bold;
+}
+
+/* Default Grid Layout for Desktop */
+.gamify-rewards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.gamify-reward-card {
+  width: calc(33.333% - 20px);
+  /* Three cards per row */
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Tablet Layout: Two cards per row */
+@media (max-width: 768px) {
+  .gamify-reward-card {
+    width: calc(50% - 20px);
+    /* Two cards per row */
+  }
+}
+
+/* Mobile Layout: One card per row */
+@media (max-width: 480px) {
+  .gamify-reward-card {
+    width: 100%;
+    /* One card per row */
+  }
+}

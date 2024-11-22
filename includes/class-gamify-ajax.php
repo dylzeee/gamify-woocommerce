@@ -26,12 +26,12 @@ class Gamify_Ajax
         $page = isset($_POST['page']) ? absint($_POST['page']) : 1;
         $user_points = isset($_POST['user_points']) ? absint($_POST['user_points']) : 0;
 
-        $rewards = new WP_Query([
+        $rewards = new \WP_Query([
             'post_type'      => 'gamify_reward',
             'post_status'    => 'publish',
             'meta_key'       => '_gamify_reward_status',
             'meta_value'     => 'active',
-            'posts_per_page' => 6,
+            'posts_per_page' => 3,
             'paged'          => $page,
         ]);
 
@@ -45,19 +45,37 @@ class Gamify_Ajax
                 $reward_name = get_the_title();
                 $points_required = get_post_meta($reward_id, '_gamify_points_required', true);
                 $reward_image = get_the_post_thumbnail_url($reward_id, 'medium');
+                $reward_type = get_post_meta($reward_id, '_gamify_reward_type', true);
 
                 echo '<div class="gamify-reward-card">';
                 if ($reward_image) {
                     echo '<img src="' . esc_url($reward_image) . '" alt="' . esc_attr($reward_name) . '" class="gamify-reward-image">';
                 }
-                echo '<h4>' . esc_html($reward_name) . '</h4>';
-                echo '<p>' . sprintf(__('Requires %d points.', 'gamify-woocommerce'), intval($points_required)) . '</p>';
+
+                // Make title clickable for free product rewards.
+                if ($reward_type === 'product') {
+                    $product_id = get_post_meta($reward_id, '_gamify_free_product_id', true);
+                    $product = wc_get_product($product_id);
+                    if ($product) {
+                        $product_link = $product->get_permalink();
+                        echo '<h4 class="gamify-reward-title"><a href="' . esc_url($product_link) . '" target="_blank" rel="noopener noreferrer">' . esc_html($reward_name) . '</a></h4>';
+                    } else {
+                        echo '<h4 class="gamify-reward-title">' . esc_html($reward_name) . '</h4>';
+                    }
+                } else {
+                    echo '<h4 class="gamify-reward-title">' . esc_html($reward_name) . '</h4>';
+                }
+
+                echo '<p class="gamify-reward-points">' . sprintf(__('Requires %d points.', 'gamify-woocommerce'), intval($points_required)) . '</p>';
+
+                // Button or disabled state for insufficient points.
                 if ($user_points >= $points_required) {
                     echo '<button class="button gamify-redeem-button" data-reward-id="' . esc_attr($reward_id) . '">' . __('Redeem Now', 'gamify-woocommerce') . '</button>';
                 } else {
-                    echo '<p class="gamify-insufficient-points">' . __('Not enough points to redeem this reward.', 'gamify-woocommerce') . '</p>';
+                    echo '<button class="button gamify-disabled-button" disabled>' . __('Need more points', 'gamify-woocommerce') . '</button>';
                 }
-                echo '</div>';
+
+                echo '</div>'; // Close reward card.
             }
 
             echo '</div>'; // Close the grid container.
@@ -67,7 +85,7 @@ class Gamify_Ajax
                 echo '<div class="gamify-pagination-controls">';
                 for ($i = 1; $i <= $rewards->max_num_pages; $i++) {
                     $active_class = $i === $page ? ' active' : '';
-                    echo '<button class="gamify-pagination-button' . $active_class . '" data-page="' . esc_attr($i) . '">' . esc_html($i) . '</button>';
+                    echo '<button class="gamify-pagination-button' . esc_attr($active_class) . '" data-page="' . esc_attr($i) . '">' . esc_html($i) . '</button>';
                 }
                 echo '</div>';
             }
@@ -78,6 +96,7 @@ class Gamify_Ajax
         wp_die(); // End AJAX execution.
     }
 
+
     public static function redeem_reward()
     {
         check_ajax_referer('gamify_rewards_nonce', 'security');
@@ -85,7 +104,7 @@ class Gamify_Ajax
         $reward_id = isset($_POST['reward_id']) ? absint($_POST['reward_id']) : 0;
         $user_id = get_current_user_id();
 
-        if (! $reward_id || ! $user_id) {
+        if (!$reward_id || !$user_id) {
             wp_send_json_error(['message' => __('Invalid reward or user.', 'gamify-woocommerce')]);
         }
 
@@ -119,27 +138,33 @@ class Gamify_Ajax
             ['%d', '%s', '%d', '%s', '%s']
         );
 
-        // Handle reward type (e.g., generate WooCommerce coupon).
-        if ('discount' === $reward_type) {
-            $coupon_code = self::generate_coupon($user_id, $reward_id);
+        // Handle free product rewards.
+        if ('product' === $reward_type) {
+            $product_id = get_post_meta($reward_id, '_gamify_free_product_id', true);
+            $quantity = get_post_meta($reward_id, '_gamify_free_product_quantity', true);
 
-            if ($coupon_code) {
-                wp_send_json_success([
-                    'message' => sprintf(__('Reward redeemed! Use coupon code: %s', 'gamify-woocommerce'), $coupon_code),
-                    'redirect_url' => wc_get_account_endpoint_url('my-rewards'),
+            if ($product_id && $quantity) {
+                // Add the product to the cart as a reward
+                $added = WC()->cart->add_to_cart($product_id, $quantity, '', '', [
+                    'gamify_reward' => true, // Tag product as a reward
                 ]);
+
+                if ($added) {
+                    wp_send_json_success([
+                        'message'      => __('Reward redeemed! Your free product has been added to the cart.', 'gamify-woocommerce'),
+                        'redirect_url' => wc_get_cart_url(),
+                    ]);
+                } else {
+                    wp_send_json_error(['message' => __('Failed to add product to the cart. Please try again.', 'gamify-woocommerce')]);
+                }
             } else {
-                wp_send_json_error(['message' => __('Failed to generate coupon. Please try again.', 'gamify-woocommerce')]);
+                wp_send_json_error(['message' => __('Invalid product reward configuration.', 'gamify-woocommerce')]);
             }
         }
-
-        // Add logic for other reward types if necessary...
-
-        wp_send_json_success([
-            'message' => __('Reward redeemed successfully.', 'gamify-woocommerce'),
-            'redirect_url' => wc_get_account_endpoint_url('my-rewards'),
-        ]);
     }
+
+
+
 
 
     private static function generate_coupon($user_id, $reward_id)
